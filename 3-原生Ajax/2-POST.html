@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX POST 请求</title>
+    <style>
+      #result {
+        width: 200px;
+        height: 100px;
+        border: solid 2px rgb(240, 195, 202);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 鼠标放入div向服务端发送请求，响应体结果在div中呈现 -->
+    <div id="result"></div>
+
+    <script>
+      //获取元素对象
+      const result = document.getElementById("result");
+      //绑定事件，事件监听
+      result.addEventListener("mouseover", function () {
+        //1.创建对象
+        const xhr = new XMLHttpRequest();
+        //2.初始化 设置请求类型和url
+        xhr.open("POST", "http://127.0.0.1:8000/server");
+        //设置请求头---两个参数---头的名字，头的值
+        xhr.setRequestHeader(//预定义请求头
+          "Content-Type",
+          "application/x-www-form-urlencoded"
+        );
+        //自定义请求头 会报错，浏览器会有安全机制
+        //xhr.setRequestHeader("name", "guoxiaopang ");
+
+        //3.发送,***设置了请求体
+        xhr.send('a=100&b=200&c=300');
+        //xhr.send('a:100&b=200&c:300');
+        // xhr.send('123456837');
+
+
+        
+       
+        //4.事件绑定
+        xhr.onreadystatechange = function(){
+          //判断
+          if (xhr.readyState == 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              //处理服务端返回的结果
+              result.innerHTML = xhr.response;
+            }
+          }
+        };
+      });
+    </script>
+  </body>
+</html>

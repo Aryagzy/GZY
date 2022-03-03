@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON 响应</title>
+    <style>
+      #result {
+        width: 200px;
+        height: 100px;
+        border: solid 3px rgb(136, 136, 230);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 15.AJAX服务端响应JSON数据 -->
+    <!--键盘按下按键，向服务端发送请求，返回结果显示在div中  -->
+    <div id="result"></div>
+
+    <script>
+      //按下键盘，发送请求
+      //绑定键盘按下事件
+      const result = document.getElementById("result");
+      window.onkeydown = function () {
+        //服务端发送请求
+        //1.创建对象
+        const xhr = new XMLHttpRequest();
+        //设置响应体的数据类型
+        xhr.responseType = 'json';
+        //2.初始化 设置请求类型和url
+        xhr.open("GET", "http://127.0.0.1:8000/json-server");
+        //发送
+        xhr.send();
+        //事件绑定
+        xhr.onreadystatechange = function () {
+          //判断
+          if (xhr.readyState == 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              //处理服务端返回的结果
+              //console.log(xhr.response);
+              //result.innerHTML = xhr.response;
+              //1.手动对数据转化
+            //   let data = JSON.parse(xhr.response);
+            //   console.log(data);
+            //   result.innerHTML = data.name;
+              //2.自动转换
+               console.log(xhr.response);
+               result.innerHTML = xhr.response.name 
+
+            }
+          }
+        };
+      };
+    </script>
+  </body>
+</html>
